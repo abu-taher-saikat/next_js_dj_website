@@ -1,15 +1,52 @@
 import {useRouter} from 'next/router';
 import Layout from '@/components/Layout';
+import { API_URL } from '@/config/index';
 
-export default function EventPage() {
+export default function EventPage({evt}) {
     const router = useRouter();
       
-    console.log(router);
+    // console.log(router);
     return (
         <Layout>
-            <h1>My Event</h1>
+            <h1>{evt.name}</h1>
             <h3>{router.query.slug}</h3>
             <button onClick={()=> router.push('/')}>back to home</button>
         </Layout>
     )
 }
+
+export async function getStaticPaths(){
+    const res = await fetch(`${API_URL}/api/events`)
+    const events = await res.json()
+
+    const paths = events.map(evt => ({
+        params : {slug : evt.slug}
+    }))
+
+    return {
+        paths,
+        fallback : true
+    }
+}
+
+export async function getStaticProps({params : {slug}}){
+    const res = await fetch(`${API_URL}/api/events/${slug}`);
+    const events = await res.json();
+    return {
+        props : {
+            evt : events[0]
+        },
+        revalidate : 1
+    }
+}
+
+// easy way
+// export async function getServerSideProps({query : {slug}}){
+//     const res = await fetch(`${API_URL}/api/events/${slug}`);
+//     const events = await res.json();
+//     return {
+//         props : {
+//             evt : events[0]
+//         }
+//     }
+// }

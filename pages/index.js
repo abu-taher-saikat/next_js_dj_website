@@ -6,7 +6,7 @@ import EventItem from '@/components/EventItem';
 import styles from '@/styles/Layout.module.css'
 
 export default function Home({events}) {
-  console.log(events);
+  // console.log(events);
   return (
     <Layout>
       <h1>Upcoming Events</h1>

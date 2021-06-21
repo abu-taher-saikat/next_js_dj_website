@@ -11,4 +11,13 @@ export default function handler(req, res) {
     res.status(405).json({message : `Method ${req.method} is not allowed`})
   }
 }
-  
+
+
+export async function getServerSideProps({query : {slug}}){
+  console.log(slug);
+
+
+  return{
+    props :{}
+  }
+}
