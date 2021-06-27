@@ -36,6 +36,7 @@ export async function getStaticProps() {
     revalidate: 1,
   }   
 }
+
 // export async function getServerSideProps() {
 //   const res = await fetch(`${API_URL}/api/events`)
 //   const events = await res.json();
